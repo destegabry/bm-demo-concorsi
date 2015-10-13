@@ -17,4 +17,10 @@
             class="btn btn-default"
             ui-sref="public.login">Back to login</button>
   </div>
+  <div class="alert alert-success"
+       ng-show="message">{{message|translate}}</div>
+  <div class="alert alert-danger"
+       ng-show="error.code">
+    {{error.code|translate}}
+  </div>
 </form>

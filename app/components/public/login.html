@@ -28,5 +28,10 @@
     <button type="button" 
             class="btn btn-link" 
             ui-sref="public.forgot">{{'FORGOT'|translate}}</button>
+            
+  </div>
+  <div class="alert alert-danger"
+       ng-show="error.code">
+    {{error.code|translate}}
   </div>
 </form>
