@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('bmDemoConcorsiApp')
-  .controller('UserCtrl', function ($scope, User, UserService) {
+  .controller('UserCtrl', function ($scope, User, UserService, MessageService) {
     $scope.user = User;
 
     $scope.login = function () {
@@ -27,12 +27,11 @@ angular.module('bmDemoConcorsiApp')
     };
     
     $scope.forgot = function () {
-      delete $scope.message;
       delete $scope.error;
       UserService.forgot($scope.user.email)
         .then(function() {
           $scope.user = {};
-          $scope.message = 'PASSWORD_RESET_SUCCESS';
+          MessageService.info('PASSWORD_RESET_SUCCESS');
         })
         .catch(function(error) {
           $scope.error = error;

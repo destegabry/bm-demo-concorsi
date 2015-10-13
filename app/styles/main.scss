@@ -7,6 +7,10 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   display: none !important;
 }
 
+.modal.in {
+  display: block;
+  background: rgba(0,0,0,.6);
+}
 
 .spinner {
   background: rgba(0,0,0,.6);
