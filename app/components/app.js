@@ -18,6 +18,9 @@ angular
   ])
   .constant('LANG_COOKIE_KEY', 'lang_cookie')
   .constant('FIREBASE_APP', new Firebase('https://bm-demo-concorsi.firebaseio.com'))
+  .config(function ($httpProvider) {
+    $httpProvider.interceptors.push('LoadingCounter');
+  })
   .controller('AppCtrl', function ($scope, $cookies, $translate, AVAILABLE_LANGUAGES, LANG_COOKIE_KEY) {
     
     $scope.changeLanguage = function (lang) {
