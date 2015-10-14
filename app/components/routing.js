@@ -33,9 +33,14 @@ angular.module('bmDemoConcorsiApp')
         templateUrl: 'components/app.html',
         abstract: true,
         resolve: {
-          checkLogged: function ($state, UserService) {
-            if (!(UserService.isLogged())) {
-              $state.go('public.login');
+          checkLogged: function ($q, $timeout, $state, UserService) {
+            if (UserService.isLogged()) {
+              $q.when();
+            } else {
+              $timeout(function () {
+                $state.go('public.login');
+              });
+              $q.reject();
             }
           }
         }
@@ -46,7 +51,7 @@ angular.module('bmDemoConcorsiApp')
         controller: 'WelcomeCtrl'
       });
 
-      $urlRouterProvider.otherwise('/public/login');
+      $urlRouterProvider.otherwise('/app/welcome');
 
   });
   
