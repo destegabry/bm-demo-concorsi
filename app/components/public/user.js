@@ -10,9 +10,6 @@ angular.module('bmDemoConcorsiApp')
         .then(function (authData) {
           $scope.user = {};
           // redirect su applicazione
-        })
-        .catch(function(error) {
-          $scope.error = error;
         });
     };
     
@@ -21,8 +18,6 @@ angular.module('bmDemoConcorsiApp')
       UserService.register($scope.user.email, $scope.user.password)
         .then(function(userData) {
           $scope.login();
-        }).catch(function(error) {
-          $scope.error = error;
         });
     };
     
@@ -32,9 +27,6 @@ angular.module('bmDemoConcorsiApp')
         .then(function() {
           $scope.user = {};
           MessageService.info('PASSWORD_RESET_SUCCESS');
-        })
-        .catch(function(error) {
-          $scope.error = error;
         });
     };
   });

@@ -1,44 +1,80 @@
 "use strict";
 
 angular.module('bmDemoConcorsiApp')
-  .service('UserService', function ($firebaseAuth, FIREBASE_APP, LoadingCounter) {
+  .service('UserService', function ($q, $firebaseAuth, FIREBASE_APP, LoadingCounter, MessageService) {
     var authObj = $firebaseAuth(FIREBASE_APP);
     var service = {
       login: function (email, password) {
         LoadingCounter.push('user-service-login');
-        return authObj.$authWithPassword({
+        var deferred = $q.defer();
+        authObj.$authWithPassword({
           email: email,
           password: password
         })
+          .then(function (user) {
+            deferred.resolve(user);
+          })
+          .catch(function(error) {
+            MessageService.error(error.code);
+            deferred.reject();
+          })
           .finally(function () {
             LoadingCounter.pop('user-service-login');
           });
+        return deferred.promise;
       },
       register: function (email, password) {
         LoadingCounter.push('user-service-register');
-        return authObj.$createUser({
+        var deferred = $q.defer();
+        authObj.$createUser({
           email: email,
           password: password
         })
+          .then(function (user) {
+            deferred.resolve(user);
+          })
+          .catch(function(error) {
+            MessageService.error(error.code);
+            deferred.reject();
+          })
           .finally(function () {
             LoadingCounter.pop('user-service-register');
           });
+        return deferred.promise;
       },
       forgot: function (email) {
         LoadingCounter.push('user-service-forgot');
-        return authObj.$resetPassword({
+        var deferred = $q.defer();
+        authObj.$resetPassword({
           email: email
         })
+          .then(function () {
+            deferred.resolve();
+          })
+          .catch(function(error) {
+            MessageService.error(error.code);
+            deferred.reject();
+          })
           .finally(function () {
             LoadingCounter.pop('user-service-forgot');
           });
+        return deferred.promise;
       },
       logout: function () {
         LoadingCounter.push('user-service-logout');
-        return authObj.$unauth()
+        var deferred = $q.defer();
+        authObj.$unauth()
+          .then(function () {
+            deferred.resolve();
+          })
+          .catch(function(error) {
+            MessageService.error(error.code);
+            deferred.reject();
+          })
           .finally(function () {
             LoadingCounter.pop('user-service-logout');
           });
+        return deferred.promise;
       }
     };
 
