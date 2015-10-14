@@ -73,7 +73,34 @@ angular.module('bmDemoConcorsiApp')
         return deferred.promise;
       },
       isLogged: function () {
-        return !!authObj.$getAuth();
+        return authObj.$getAuth();
+      },
+      changePassword: function (oldPassword, newPassword) {
+        LoadingCounter.push('user-service-change-password');
+        var deferred = $q.defer();
+
+        var auth = authObj.$getAuth();
+        if (auth) {
+          var email = auth.password.email;
+          authObj.$changePassword({
+            email: email,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+          }).then(function() {
+            deferred.resolve()
+          }).catch(function(error) {
+            MessageService.error(error.code);
+            deferred.reject();
+          })
+          .finally(function () {
+            LoadingCounter.pop('user-service-change-password');
+          });
+
+        } else {
+          deferred.reject();
+        }
+
+        return deferred.promise;
       }
     };
 

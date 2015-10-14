@@ -1,0 +1,45 @@
+<form name="changePwdForm" 
+      class="changePwd" 
+      ng-submit="changePwd()">
+  <div class="form-group">
+    <label for="oldPassword">{{'OLD_PASSWORD'|translate}}</label>
+    <input type="password" 
+           name="oldPassword"
+           class="form-control" 
+           placeholder="{{'OLD_PASSWORD'|translate}}" 
+           ng-model="oldPassword"
+           required>
+  </div>
+  <div class="form-group">
+    <label for="newPassword">{{'NEW_PASSWORD'|translate}}</label>
+    <input type="password" 
+           name="newPassword"
+           class="form-control" 
+           placeholder="{{'NEW_PASSWORD'|translate}}" 
+           ng-model="newPassword"
+           ng-minlength="8"
+           required>
+  </div>
+  <div class="form-group">
+    <label for="confirmPassword">{{'CONFIRM_PASSWORD'|translate}}</label>
+    <input type="password" 
+           name="confirmPassword"
+           class="form-control" 
+           placeholder="{{'CONFIRM_PASSWORD'|translate}}" 
+           ng-model="confirmPassword"
+           required>
+  </div>
+  <div class="form-group">
+    <button type="submit" 
+            class="btn btn-primary"
+            ng-disabled="!changePwdForm.$valid || confirmPassword !== newPassword"
+            ng-click="changePwd()">{{'CHANGE_PASSWORD'|translate}}</button>
+    <button type="button" 
+            class="btn btn-default" 
+            ui-sref="app.welcome">{{'CANCEL'|translate}}</button>
+  </div>
+  <div class="alert alert-danger"
+       ng-show="error.code">
+    {{error.code|translate}}
+  </div>
+</form>

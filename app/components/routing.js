@@ -34,8 +34,16 @@ angular.module('bmDemoConcorsiApp')
         abstract: true,
         resolve: {
           checkLogged: function ($q, $timeout, $state, UserService) {
-            if (UserService.isLogged()) {
-              $q.when();
+            var auth = UserService.isLogged();
+            if (auth) {
+              if (auth.password.isTemporaryPassword) {
+                $timeout(function () {
+                  $state.go('app.change-pwd');
+                });
+                $q.reject();
+              } else {
+                $q.when();
+              }
             } else {
               $timeout(function () {
                 $state.go('public.login');
@@ -49,6 +57,11 @@ angular.module('bmDemoConcorsiApp')
         url: '/welcome',
         templateUrl: 'components/app/welcome.html',
         controller: 'WelcomeCtrl'
+      })
+      .state('app.change-pwd', {
+        url: '/change-pwd',
+        templateUrl: 'components/app/change-pwd.html',
+        controller: 'ChangePwdCtrl'
       });
 
       $urlRouterProvider.otherwise('/app/welcome');
