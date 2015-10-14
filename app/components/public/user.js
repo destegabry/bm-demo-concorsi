@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('bmDemoConcorsiApp')
-  .controller('UserCtrl', function ($scope, User, UserService, MessageService) {
+  .controller('UserCtrl', function ($scope, $state, User, UserService, MessageService) {
     $scope.user = User;
 
     $scope.login = function () {
@@ -9,7 +9,7 @@ angular.module('bmDemoConcorsiApp')
       UserService.login($scope.user.email, $scope.user.password)
         .then(function (authData) {
           $scope.user = {};
-          // redirect su applicazione
+          $state.go('app.welcome');
         });
     };
     

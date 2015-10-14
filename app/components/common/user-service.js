@@ -63,18 +63,17 @@ angular.module('bmDemoConcorsiApp')
       logout: function () {
         LoadingCounter.push('user-service-logout');
         var deferred = $q.defer();
-        authObj.$unauth()
-          .then(function () {
+        authObj.$unauth();
+        authObj.$onAuth(function(authData) {
+          if (!authData) {
             deferred.resolve();
-          })
-          .catch(function(error) {
-            MessageService.error(error.code);
-            deferred.reject();
-          })
-          .finally(function () {
-            LoadingCounter.pop('user-service-logout');
-          });
+          }
+          LoadingCounter.pop('user-service-logout');
+        });
         return deferred.promise;
+      },
+      isLogged: function () {
+        return !!authObj.$getAuth();
       }
     };
 

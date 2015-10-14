@@ -21,12 +21,19 @@ angular
   .config(function ($httpProvider) {
     $httpProvider.interceptors.push('LoadingCounter');
   })
-  .controller('AppCtrl', function ($scope, $cookies, $translate, AVAILABLE_LANGUAGES, LANG_COOKIE_KEY) {
+  .controller('AppCtrl', function ($scope, $cookies, $translate, $state, AVAILABLE_LANGUAGES, LANG_COOKIE_KEY, UserService) {
     
     $scope.changeLanguage = function (lang) {
       $translate.use(lang);
       $scope.currentLanguage = lang;
       $cookies.put(LANG_COOKIE_KEY, lang);
+    };
+
+    $scope.logout = function () {
+      UserService.logout()
+        .then(function () {
+          $state.go('public.login');
+        });
     };
 
     var cookieLang = $cookies.get(LANG_COOKIE_KEY);

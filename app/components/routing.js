@@ -33,8 +33,17 @@ angular.module('bmDemoConcorsiApp')
         templateUrl: 'components/app.html',
         abstract: true,
         resolve: {
-
+          checkLogged: function ($state, UserService) {
+            if (!(UserService.isLogged())) {
+              $state.go('public.login');
+            }
+          }
         }
+      })
+      .state('app.welcome', {
+        url: '/welcome',
+        templateUrl: 'components/app/welcome.html',
+        controller: 'WelcomeCtrl'
       });
 
       $urlRouterProvider.otherwise('/public/login');
