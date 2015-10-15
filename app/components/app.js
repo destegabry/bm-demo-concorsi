@@ -21,8 +21,12 @@ angular
   .config(function ($httpProvider) {
     $httpProvider.interceptors.push('LoadingCounter');
   })
-  .controller('AppCtrl', function ($scope, $cookies, $translate, $state, AVAILABLE_LANGUAGES, LANG_COOKIE_KEY, UserService) {
+  .controller('AppCtrl', function ($scope, $rootScope, $cookies, $translate, $state, AVAILABLE_LANGUAGES, LANG_COOKIE_KEY, UserService) {
     
+    $rootScope.$on('$stateChangeSuccess', function(event, toState){ 
+      $rootScope.currentState = toState.name;
+    })
+
     $scope.changeLanguage = function (lang) {
       $translate.use(lang);
       $scope.currentLanguage = lang;

@@ -67,6 +67,11 @@ angular.module('bmDemoConcorsiApp')
         url: '/upload',
         templateUrl: 'components/app/upload.html',
         controller: 'UploadCtrl'
+      })
+      .state('app.profile', {
+        url: '/profile',
+        templateUrl: 'components/app/profile.html',
+        controller: 'ProfileCtrl'
       });
 
       $urlRouterProvider.otherwise('/app/welcome');

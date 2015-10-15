@@ -21,4 +21,7 @@
             class="btn btn-default" 
             ui-sref="app.welcome">{{'CANCEL'|translate}}</button>
   </div>
+  <div ng-repeat="item in list">
+    {{item.text}}
+  </div>
 </form>

@@ -1,13 +1,16 @@
 angular.module('bmDemoConcorsiApp')
   .controller('UploadCtrl', function($scope, $filter, $firebaseArray, FIREBASE_APP, UserService, MessageService) {
     $scope.uploadText = '';
-    var list = $firebaseArray(FIREBASE_APP);
-    
+    $scope.list = $firebaseArray(FIREBASE_APP);
+
+    var currentUser = UserService.isLogged();
+
     $scope.upload = function () {
-      list.$add({
+      $scope.list.$add({
         text: $scope.uploadText,
         type: 'upload-submit',
-        uid: UserService.isLogged().uid
+        email: currentUser.password.email,
+        uid: currentUser.uid
       })
         .then(function() {
           $scope.uploadText = '';
