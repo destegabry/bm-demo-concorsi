@@ -14,9 +14,7 @@ angular
     'ui.router', 
     'dsg.loadingCounter', 
     'pascalprecht.translate',
-    'firebase',
-    'cloudinary',
-    'ngFileUpload'
+    'firebase'
   ])
   .constant('LANG_COOKIE_KEY', 'lang_cookie')
   .constant('FIREBASE_APP', new Firebase('https://bm-demo-concorsi.firebaseio.com'))
